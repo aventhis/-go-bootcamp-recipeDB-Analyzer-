@@ -1,0 +1,51 @@
+<recipes>
+    <cake>
+        <name>Торт Красный Бархат с клубникой</name>
+        <stovetime>40 мин</stovetime>
+        <ingredients>
+            <item>
+                <itemname>Мука</itemname>
+                <itemcount>3</itemcount>
+                <itemunit>чашки</itemunit>
+            </item>
+            <item>
+                <itemname>Экстракт ванили</itemname>
+                <itemcount>1.5</itemcount>
+                <itemunit>столовые ложки</itemunit>
+            </item>
+            <item>
+                <itemname>Клубника</itemname>
+                <itemcount>7</itemcount>
+                <itemunit></itemunit>
+            </item>
+            <item>
+                <itemname>Корица</itemname>
+                <itemcount>1</itemcount>
+                <itemunit>шт</itemunit>
+            </item>
+        </ingredients>
+    </cake>
+    <cake>
+        <name>Черничный кекс</name>
+        <stovetime>30 мин</stovetime>
+        <ingredients>
+            <item>
+                <itemname>Разрыхлитель</itemname>
+                <itemcount>3</itemcount>
+                <itemunit>чайные ложки</itemunit>
+            </item>
+            <item>
+                <itemname>Коричневый сахар</itemname>
+                <itemcount>0.5</itemcount>
+                <itemunit>чашка</itemunit>
+            </item>
+            <item>
+                <itemname>Черника</itemname>
+                <itemcount>1</itemcount>
+                <itemunit>чашка</itemunit>
+            </item>
+            <!-- Здесь могут быть другие ингредиенты -->
+        </ingredients>
+    </cake>
+    <!-- Здесь могут быть другие торты -->
+</recipes>
