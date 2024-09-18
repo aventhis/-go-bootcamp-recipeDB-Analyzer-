@@ -74,7 +74,7 @@ To compare the original database with the stolen one and identify changes, use t
 ```
 
 Expected output format:
-```bash
+```rust
 ADDED cake "Moonshine Muffin"
 REMOVED cake "Blueberry Muffin Cake"
 CHANGED cooking time for cake "Red Velvet Strawberry Cake" - "45 min" instead of "40 min"

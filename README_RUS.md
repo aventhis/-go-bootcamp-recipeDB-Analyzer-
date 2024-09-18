@@ -74,7 +74,7 @@ Go Bootcamp RecipeDB Analyzer — это консольное приложени
 ```
 
 Ожидаемый формат вывода:
-```bash
+```rust
 ADDED cake "Moonshine Muffin"
 REMOVED cake "Blueberry Muffin Cake"
 CHANGED cooking time for cake "Red Velvet Strawberry Cake" - "45 min" instead of "40 min"
