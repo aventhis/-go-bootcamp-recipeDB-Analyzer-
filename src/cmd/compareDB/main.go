@@ -36,11 +36,11 @@ func main() {
 	for _, recipesOld := range mapCakesOld {
 		//сравниваем поля Name структуры Recipe
 		if recipesNew, exists := mapCakesNew[recipesOld.Name]; !exists {
-			fmt.Printf("REMOVED cake %v\n", recipesOld.Name)
+			fmt.Printf("УДАЛЕН торт %v\n", recipesOld.Name)
 		} else {
 			// сравниваем поле Time структуры Recipe
 			if recipesOld.Time != recipesNew.Time {
-				fmt.Printf("CHANGED cooking time for cake %v - %v instead of %v\n", recipesOld.Name, recipesNew.Time, recipesOld.Time)
+				fmt.Printf("ИЗМЕНИЛОСЬ время готовки для торта %v - %v вместо %v\n", recipesOld.Name, recipesNew.Time, recipesOld.Time)
 			}
 
 			// делаем map - ключ - название ингредиента / значение - структура Ingredient
@@ -56,7 +56,7 @@ func main() {
 
 			for _, ingridientOld := range mapIngredientsOld {
 				if ingridienNew, exists := mapIngredientsNew[ingridientOld.Name]; !exists {
-					fmt.Printf("REMOVED ingredient %v for cake %v\n", ingridientOld.Name, recipesOld.Name)
+					fmt.Printf("УДАЛЕН ингредиент %v для торта %v\n", ingridientOld.Name, recipesOld.Name)
 				} else {
 					fmt.Println(ingridienNew)
 				}
@@ -68,7 +68,7 @@ func main() {
 
 	for nameNew := range mapCakesNew {
 		if _, exists := mapCakesOld[nameNew]; !exists {
-			fmt.Printf("ADDED cake %v\n", nameNew)
+			fmt.Printf("ДОБАВЛЕН торт %v\n", nameNew)
 		}
 	}
 }

@@ -75,14 +75,14 @@ Go Bootcamp RecipeDB Analyzer — это консольное приложени
 
 Ожидаемый формат вывода:
 ```rust
-ADDED cake "Moonshine Muffin"
-REMOVED cake "Blueberry Muffin Cake"
-CHANGED cooking time for cake "Red Velvet Strawberry Cake" - "45 min" instead of "40 min"
-ADDED ingredient "Coffee beans" for cake "Red Velvet Strawberry Cake"
-REMOVED ingredient "Vanilla extract" for cake "Red Velvet Strawberry Cake"
-CHANGED unit for ingredient "Flour" for cake "Red Velvet Strawberry Cake" - "mugs" instead of "cups"
-CHANGED unit count for ingredient "Strawberries" for cake "Red Velvet Strawberry Cake" - "8" instead of "7"
-REMOVED unit "pieces" for ingredient "Cinnamon" for cake "Red Velvet Strawberry Cake"
+ДОБАВЛЕН торт "Маффин Лунный свет"
+УДАЛЕН торт "Черничный кекс"
+ИЗМЕНИЛОСЬ время готовки для торта "Торт Красный Бархат с клубникой" - "45 мин" вместо "40 мин"
+ДОБАВЛЕН ингредиент "Кофейные зерна" для торта "Торт Красный Бархат с клубникой"
+УДАЛЕН ингредиент "Экстракт ванили" для торта "Торт Красный Бархат с клубникой"
+ИЗМЕНИЛАСЬ единица измерения для ингредиента "Мука" для торта "Торт Красный Бархат с клубникой" - "кружки" вместо "чашки"
+ИЗМЕНИЛОСЬ количество для ингредиента "Клубника" для торта "Торт Красный Бархат с клубникой" - "8" вместо "7"
+УДАЛЕНА единица измерения "шт" для ингредиента "Корица" для торта "Торт Красный Бархат с клубником"
 ```
 
 ### Упражнение 02: После вечеринки
