@@ -32,6 +32,7 @@ func NewDBReader(filePath string) (DBReader, Filetype, error) {
 	}
 }
 
+// ReadDB - читает файл, десериализует его в структуру
 func ReadDB(filepath string) (*Recipes, Filetype, error) {
 	// Создаем ридер на основе типа файла (JSON или XML)
 	reader, fileType, err := NewDBReader(filepath)
