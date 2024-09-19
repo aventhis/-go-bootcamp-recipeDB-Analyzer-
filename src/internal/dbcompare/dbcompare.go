@@ -5,22 +5,31 @@ import (
 	"fmt"
 )
 
+func createRecipeMap(recipes *dbreader.Recipes) map[string]dbreader.Recipe {
+	recipeMap := make(map[string]dbreader.Recipe)
+	for _, recipe := range recipes.Cakes {
+		recipeMap[recipe.Name] = recipe
+	}
+	return recipeMap
+}
+
+func createIngredientMap(ingredients []dbreader.Ingredient) map[string]dbreader.Ingredient {
+	ingredientMap := make(map[string]dbreader.Ingredient)
+	for _, ingredient := range ingredients {
+		ingredientMap[ingredient.Name] = ingredient
+	}
+	return ingredientMap
+}
+
 func CompareDB(recipeOld *dbreader.Recipes, recipeNew *dbreader.Recipes) {
 	// mapCakesOld - мапа ключ - название торта / значение - структура Recipe
-	mapCakesOld := make(map[string]dbreader.Recipe)
-	for _, structRecipe := range recipeOld.Cakes {
-		mapCakesOld[structRecipe.Name] = structRecipe
-	}
-
-	mapCakesNew := make(map[string]dbreader.Recipe)
-	for _, structRecipe := range recipeNew.Cakes {
-		mapCakesNew[structRecipe.Name] = structRecipe
-	}
+	mapCakesOld := createRecipeMap(recipeOld)
+	mapCakesNew := createRecipeMap(recipeNew)
 
 	// oldRecipe - структура Recipe (старая бд)
 	// newRecipe - структура Recipe (новая бд)
 	for _, oldRecipe := range mapCakesOld {
-		//сравниваем поля Name структуры Recipe
+		// сравниваем поля Name структуры Recipe
 		if newRecipe, exists := mapCakesNew[oldRecipe.Name]; !exists {
 			fmt.Printf("УДАЛЕН торт %q\n", oldRecipe.Name)
 		} else {
@@ -45,35 +54,35 @@ func compareTime(oldRecipe dbreader.Recipe, newRecipe dbreader.Recipe) {
 
 func compareIngridients(oldRecipe dbreader.Recipe, newRecipe dbreader.Recipe) {
 	// делаем map - ключ - название ингредиента / значение - структура Ingredient
-	mapIngredientsOld := make(map[string]dbreader.Ingredient)
-	for _, ingredientOld := range oldRecipe.Ingredients {
-		mapIngredientsOld[ingredientOld.Name] = ingredientOld
-	}
-
-	mapIngredientsNew := make(map[string]dbreader.Ingredient)
-	for _, ingredientNew := range newRecipe.Ingredients {
-		mapIngredientsNew[ingredientNew.Name] = ingredientNew
-	}
+	mapIngredientsOld := createIngredientMap(oldRecipe.Ingredients)
+	mapIngredientsNew := createIngredientMap(newRecipe.Ingredients)
 
 	//сравниваем поля Name структуры Ingridients
 	for _, ingridientOld := range mapIngredientsOld {
-		if ingridienNew, exists := mapIngredientsNew[ingridientOld.Name]; !exists {
+		if ingredientNew, exists := mapIngredientsNew[ingridientOld.Name]; !exists {
 			fmt.Printf("УДАЛЕН ингредиент %q для торта %q\n", ingridientOld.Name, oldRecipe.Name)
 		} else {
-			if ingridienNew.Unit == "" && ingridientOld.Unit != "" {
-				fmt.Printf("УДАЛЕНА единица измерения %q для ингредиента %q для торта %q\n",
-					ingridientOld.Unit, ingridientOld.Name, oldRecipe.Name)
-			} else if ingridientOld.Unit == "" && ingridienNew.Unit != "" {
-				fmt.Printf("ДОБАВЛЕНА единица измерения %q для ингредиента %q для торта %q\n",
-					ingridientOld.Unit, ingridientOld.Name, oldRecipe.Name)
-			} else if ingridientOld.Unit != ingridienNew.Unit {
-				fmt.Printf("ИЗМЕНИЛАСЬ единица измерения для ингредиента %q для торта %q - %q "+
-					"вместо %q\n", ingridientOld.Name, oldRecipe.Name, ingridientOld.Unit, ingridienNew.Unit)
-			}
-			if ingridienNew.Count != ingridientOld.Count {
-				fmt.Printf("ИЗМЕНИЛОСЬ количество для ингредиента %q для торта %q - %q вместо %q\n",
-					ingridientOld.Name, oldRecipe.Name, ingridienNew.Count, ingridientOld.Count)
-			}
+			compareIngredientDetails(oldRecipe.Name, ingridientOld, ingredientNew)
 		}
+	}
+}
+
+func compareIngredientDetails(recipeName string, oldIngredient, newIngredient dbreader.Ingredient) {
+	// Сравнение единиц измерения
+	if newIngredient.Unit == "" && oldIngredient.Unit != "" {
+		fmt.Printf("УДАЛЕНА единица измерения %q для ингредиента %q для торта %q\n",
+			oldIngredient.Unit, oldIngredient.Name, recipeName)
+	} else if oldIngredient.Unit == "" && newIngredient.Unit != "" {
+		fmt.Printf("ДОБАВЛЕНА единица измерения %q для ингредиента %q для торта %q\n",
+			newIngredient.Unit, oldIngredient.Name, recipeName)
+	} else if oldIngredient.Unit != newIngredient.Unit {
+		fmt.Printf("ИЗМЕНИЛАСЬ единица измерения для ингредиента %q для торта %q - %q вместо %q\n",
+			oldIngredient.Name, recipeName, newIngredient.Unit, oldIngredient.Unit)
+	}
+
+	// Сравнение количества
+	if newIngredient.Count != oldIngredient.Count {
+		fmt.Printf("ИЗМЕНИЛОСЬ количество для ингредиента %q для торта %q - %q вместо %q\n",
+			oldIngredient.Name, recipeName, newIngredient.Count, oldIngredient.Count)
 	}
 }
