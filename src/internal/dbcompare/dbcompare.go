@@ -5,31 +5,12 @@ import (
 	"fmt"
 )
 
-func createRecipeMap(recipes *dbreader.Recipes) map[string]dbreader.Recipe {
-	recipeMap := make(map[string]dbreader.Recipe)
-	for _, recipe := range recipes.Cakes {
-		recipeMap[recipe.Name] = recipe
-	}
-	return recipeMap
-}
-
-func createIngredientMap(ingredients []dbreader.Ingredient) map[string]dbreader.Ingredient {
-	ingredientMap := make(map[string]dbreader.Ingredient)
-	for _, ingredient := range ingredients {
-		ingredientMap[ingredient.Name] = ingredient
-	}
-	return ingredientMap
-}
-
 func CompareDB(recipeOld *dbreader.Recipes, recipeNew *dbreader.Recipes) {
-	// mapCakesOld - мапа ключ - название торта / значение - структура Recipe
 	mapCakesOld := createRecipeMap(recipeOld)
 	mapCakesNew := createRecipeMap(recipeNew)
 
-	// oldRecipe - структура Recipe (старая бд)
-	// newRecipe - структура Recipe (новая бд)
 	for _, oldRecipe := range mapCakesOld {
-		// сравниваем поля Name структуры Recipe
+		// compare Name
 		if newRecipe, exists := mapCakesNew[oldRecipe.Name]; !exists {
 			fmt.Printf("УДАЛЕН торт %q\n", oldRecipe.Name)
 		} else {
@@ -45,6 +26,14 @@ func CompareDB(recipeOld *dbreader.Recipes, recipeNew *dbreader.Recipes) {
 	}
 }
 
+func createRecipeMap(recipes *dbreader.Recipes) map[string]dbreader.Recipe {
+	recipeMap := make(map[string]dbreader.Recipe)
+	for _, recipe := range recipes.Cakes {
+		recipeMap[recipe.Name] = recipe
+	}
+	return recipeMap
+}
+
 func compareTime(oldRecipe dbreader.Recipe, newRecipe dbreader.Recipe) {
 	if oldRecipe.Time != newRecipe.Time {
 		fmt.Printf("ИЗМЕНИЛОСЬ время готовки для торта %q - %q вместо %q\n",
@@ -53,11 +42,9 @@ func compareTime(oldRecipe dbreader.Recipe, newRecipe dbreader.Recipe) {
 }
 
 func compareIngridients(oldRecipe dbreader.Recipe, newRecipe dbreader.Recipe) {
-	// делаем map - ключ - название ингредиента / значение - структура Ingredient
 	mapIngredientsOld := createIngredientMap(oldRecipe.Ingredients)
 	mapIngredientsNew := createIngredientMap(newRecipe.Ingredients)
 
-	//сравниваем поля Name структуры Ingridients
 	for _, ingridientOld := range mapIngredientsOld {
 		if ingredientNew, exists := mapIngredientsNew[ingridientOld.Name]; !exists {
 			fmt.Printf("УДАЛЕН ингредиент %q для торта %q\n", ingridientOld.Name, oldRecipe.Name)
@@ -67,8 +54,15 @@ func compareIngridients(oldRecipe dbreader.Recipe, newRecipe dbreader.Recipe) {
 	}
 }
 
+func createIngredientMap(ingredients []dbreader.Ingredient) map[string]dbreader.Ingredient {
+	ingredientMap := make(map[string]dbreader.Ingredient)
+	for _, ingredient := range ingredients {
+		ingredientMap[ingredient.Name] = ingredient
+	}
+	return ingredientMap
+}
+
 func compareIngredientDetails(recipeName string, oldIngredient, newIngredient dbreader.Ingredient) {
-	// Сравнение единиц измерения
 	if newIngredient.Unit == "" && oldIngredient.Unit != "" {
 		fmt.Printf("УДАЛЕНА единица измерения %q для ингредиента %q для торта %q\n",
 			oldIngredient.Unit, oldIngredient.Name, recipeName)
@@ -80,7 +74,6 @@ func compareIngredientDetails(recipeName string, oldIngredient, newIngredient db
 			oldIngredient.Name, recipeName, newIngredient.Unit, oldIngredient.Unit)
 	}
 
-	// Сравнение количества
 	if newIngredient.Count != oldIngredient.Count {
 		fmt.Printf("ИЗМЕНИЛОСЬ количество для ингредиента %q для торта %q - %q вместо %q\n",
 			oldIngredient.Name, recipeName, newIngredient.Count, oldIngredient.Count)
