@@ -73,6 +73,8 @@ func RunCompareFS() {
 		txt := scanner.Text()
 		if _, exist := data[txt]; !exist {
 			fmt.Printf("ADDED %q\n", txt)
+		} else {
+			delete(data, txt)
 		}
 	}
 
@@ -81,6 +83,7 @@ func RunCompareFS() {
 		return
 	}
 
-	// Проверка на удаленные файлы
-
+	for path := range data {
+		fmt.Printf("DELETE %q\n", path)
+	}
 }
