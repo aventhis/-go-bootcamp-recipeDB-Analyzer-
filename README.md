@@ -99,46 +99,56 @@ This will output any added or removed files between the two snapshots.
 
 ```graphql
 go-bootcamp-recipeDB-analyzer/
+go-bootcamp-recipeDB-analyzer/
 │
 ├── src/
 │   ├── cmd/
-│   │   ├── compareDB/       # Main command for comparing databases
+│   │   ├── compareDB/       # Main command for comparing recipe databases
+│   │   │   └── main.go
+│   │   ├── compareFS/       # Main command for comparing file system snapshots
 │   │   │   └── main.go
 │   │   └── readDB/          # Main command for reading databases
 │   │       └── main.go
-│   ├── data/                # Sample XML and JSON data files
+│   ├── data/                # Sample XML, JSON data files, and snapshots for testing
 │   │   ├── original_database.xml
-│   │   └── stolen_database.json
+│   │   ├── stolen_database.json
+│   │   ├── snapshot1.txt
+│   │   └── snapshot2.txt
 │   └── internal/
 │       ├── app/             # Contains application logic
 │       │   └── app.go
-│       ├── dbcompare/       # Logic for comparing databases
+│       ├── dbcompare/       # Logic for comparing recipe databases
 │       │   └── dbcompare.go
-│       ├── dbreader/        # Logic for reading databases in various formats
+│       ├── dbreader/        # Logic for reading and converting databases
 │       │   ├── converter.go
 │       │   ├── dbreader.go
 │       │   ├── json_reader.go
 │       │   ├── types.go
 │       │   └── xml_reader.go
+│       ├── fscompare/       # Logic for comparing file system snapshots
+│       │   └── fscompare.go
 │       └── utils/           # Utility functions
 │           ├── error_handling.go
 │           ├── fileutils.go
 │           └── parse.go
 │
-├── .gitignore               # Ignore files for version control
+├── .gitignore               # Specifies files and directories to be ignored by Git
 ├── go.mod                   # Go module definition
+├── Makefile                 # Commands for building and running the project
 └── README.md                # Project documentation
 ```
 
 
 ### Explanation of the Directories
 
-- **`cmd/`**: Contains the main application entry points. Subdirectories for each command (`compareDB`, `readDB`) contain the respective `main.go` files.
-- **`data/`**: Stores sample databases in XML and JSON formats for testing and development.
+- **`cmd/`**: Contains the main application entry points. Subdirectories for each command (`compareDB`, `readDB`, `compareFS`) contain the respective `main.go` files.
+- **`data/`**: Stores sample databases and file snapshots in XML, JSON, and text formats for testing and development.
 - **`internal/`**: Core application logic divided into:
     - **`app/`**: Contains application logic for running the core functions.
     - **`dbcompare/`**: Implements logic for comparing recipe databases.
     - **`dbreader/`**: Reads and parses databases (XML and JSON).
+    - **`fscompare/`**: Logic for comparing file snapshots.
     - **`utils/`**: Helper functions for error handling and file operations.
 - **`.gitignore`**: Specifies files and directories to be ignored by Git (e.g., `.idea/`).
 - **`go.mod`**: Go module file, which defines dependencies and module information.
+
