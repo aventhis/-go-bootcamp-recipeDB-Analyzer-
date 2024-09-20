@@ -1,7 +1,6 @@
-package converter
+package dbreader
 
 import (
-	dbreader2 "day01/internal/dbreader"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
@@ -9,15 +8,15 @@ import (
 )
 
 // PrettyPainting - Функция для конвертации и вывода данных в противоположном формате
-func PrettyPainting(recipe *dbreader2.Recipes, fType dbreader2.Filetype) error {
+func PrettyPainting(recipe *Recipes, fType Filetype) error {
 	switch fType {
-	case dbreader2.JSON:
+	case JSON:
 		data, err := xml.MarshalIndent(recipe, "", "    ")
 		if err != nil {
 			return errors.New("ошибка при кодировании данных в JSON")
 		}
 		fmt.Println(string(data))
-	case dbreader2.XML:
+	case XML:
 		data, err := json.MarshalIndent(recipe, "", "    ")
 		if err != nil {
 			return errors.New("ошибка при кодировании данных в XML")

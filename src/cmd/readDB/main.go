@@ -2,7 +2,6 @@
 package main
 
 import (
-	"day01/internal/converter"
 	"day01/internal/dbreader"
 	utils2 "day01/pkg/utils"
 )
@@ -17,6 +16,6 @@ func main() {
 	utils2.HandleError(err)
 
 	// Преобразуем и выводим данные в противоположном формате
-	err = converter.PrettyPainting(recipe, fileType)
+	err = dbreader.PrettyPainting(recipe, fileType)
 	utils2.HandleError(err)
 }
