@@ -46,32 +46,41 @@ func RunCompareFS() {
 
 	fileOld, err := os.Open(filepathForOld)
 	if err != nil {
-		fmt.Println("Ошибка открытия файла")
+		fmt.Println("Ошибка открытия файла", err)
 	}
 	defer fileOld.Close()
 
-	data := make(map[string]int)
+	data := make(map[string]struct{})
 	scanner := bufio.NewScanner(fileOld)
 	for scanner.Scan() {
 		txt := scanner.Text()
-		data[txt]++
+		data[txt] = struct{}{}
+	}
+
+	if err = scanner.Err(); err != nil {
+		fmt.Println("Ошибка при чтении файла:", err)
+		return
 	}
 
 	fileNew, err := os.Open(filepathForNew)
 	if err != nil {
-		fmt.Println("Ошибка открытия файла")
+		fmt.Println("Ошибка открытия файла", err)
 	}
 	defer fileNew.Close()
 
-	scanner = bufio.NewScanner(fileOld)
+	scanner = bufio.NewScanner(fileNew)
 	for scanner.Scan() {
 		txt := scanner.Text()
-		for str := range data {
-			if str != txt {
-				fmt.Println("ADDED %q\n", txt)
-			}
+		if _, exist := data[txt]; !exist {
+			fmt.Printf("ADDED %q\n", txt)
 		}
-		data[txt]++
 	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Ошибка при чтении файла:", err)
+		return
+	}
+
+	// Проверка на удаленные файлы
 
 }
