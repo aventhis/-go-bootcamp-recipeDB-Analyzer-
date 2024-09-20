@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"os"
 )
@@ -12,4 +13,12 @@ func ReadFile(filepath string) ([]byte, error) {
 		return nil, fmt.Errorf("ошибка чтения файла: %v", err)
 	}
 	return data, nil
+}
+
+func OpenFile(filepath string) (*os.File, error) {
+	filePath, err := os.Open(filepath)
+	if err != nil {
+		return nil, errors.New("ошибка открытия файла")
+	}
+	return filePath, nil
 }

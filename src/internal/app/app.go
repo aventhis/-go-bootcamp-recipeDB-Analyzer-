@@ -1,12 +1,10 @@
 package app
 
 import (
-	"bufio"
 	"day01/internal/dbcompare"
 	"day01/internal/dbreader"
+	"day01/internal/fscompare"
 	"day01/internal/utils"
-	"fmt"
-	"os"
 )
 
 // RunConvertDB запускает процесс чтения базы данных и преобразования форматов
@@ -44,46 +42,5 @@ func RunCompareFS() {
 	filepathForOld, filepathForNew, err := utils.ParseFileForCompareDB()
 	utils.HandleError(err)
 
-	fileOld, err := os.Open(filepathForOld)
-	if err != nil {
-		fmt.Println("Ошибка открытия файла", err)
-	}
-	defer fileOld.Close()
-
-	data := make(map[string]struct{})
-	scanner := bufio.NewScanner(fileOld)
-	for scanner.Scan() {
-		txt := scanner.Text()
-		data[txt] = struct{}{}
-	}
-
-	if err = scanner.Err(); err != nil {
-		fmt.Println("Ошибка при чтении файла:", err)
-		return
-	}
-
-	fileNew, err := os.Open(filepathForNew)
-	if err != nil {
-		fmt.Println("Ошибка открытия файла", err)
-	}
-	defer fileNew.Close()
-
-	scanner = bufio.NewScanner(fileNew)
-	for scanner.Scan() {
-		txt := scanner.Text()
-		if _, exist := data[txt]; !exist {
-			fmt.Printf("ADDED %q\n", txt)
-		} else {
-			delete(data, txt)
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Ошибка при чтении файла:", err)
-		return
-	}
-
-	for path := range data {
-		fmt.Printf("DELETE %q\n", path)
-	}
+	fscompare.CompareFS(filepathForOld, filepathForNew)
 }
