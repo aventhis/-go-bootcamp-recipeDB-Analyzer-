@@ -103,35 +103,42 @@ go-bootcamp-recipeDB-analyzer/
 ├── src/
 │   ├── cmd/
 │   │   ├── compareDB/       # Main command for comparing databases
+│   │   │   └── main.go
 │   │   └── readDB/          # Main command for reading databases
+│   │       └── main.go
 │   ├── data/                # Sample XML and JSON data files
-│   ├── internal/
-│   │   ├── converter/       # Code for data conversion (XML to JSON and vice versa)
-│   │   └── dbreader/        # Database readers for XML and JSON
-│   └── pkg/
-│       └── utils/           # Utility functions (e.g., file handling, error handling)
+│   │   ├── original_database.xml
+│   │   └── stolen_database.json
+│   └── internal/
+│       ├── app/             # Contains application logic
+│       │   └── app.go
+│       ├── dbcompare/       # Logic for comparing databases
+│       │   └── dbcompare.go
+│       ├── dbreader/        # Logic for reading databases in various formats
+│       │   ├── converter.go
+│       │   ├── dbreader.go
+│       │   ├── json_reader.go
+│       │   ├── types.go
+│       │   └── xml_reader.go
+│       └── utils/           # Utility functions
+│           ├── error_handling.go
+│           ├── fileutils.go
+│           └── parse.go
 │
-└── .gitignore               # Ignore files for version control
+├── .gitignore               # Ignore files for version control
+├── go.mod                   # Go module definition
+└── README.md                # Project documentation
 ```
+
 
 ### Explanation of the Directories
 
-- **`cmd/`**: This directory contains the main application entry points. It has subdirectories for each command (e.g., `compareDB` and `readDB`), each with its own `main.go` file.
-
-- **`data/`**: Stores sample databases in different formats (XML and JSON) for testing and development.
-
-- **`internal/`**: This directory contains the core internal packages of the project, organized into:
-    - **`converter/`**: Code for converting data between formats (e.g., JSON to XML).
-    - **`dbreader/`**: Implements the `DBReader` interface for handling different file formats. This includes:
-        - `dbreader.go`: Defines the interface for reading the databases.
-        - `json_reader.go` and `xml_reader.go`: Implementations for reading JSON and XML databases.
-        - `types.go`: Defines common data structures.
-
-- **`pkg/`**: Contains general-purpose utilities and helper functions.
-    - **`utils/`**: Includes utility functions for error handling, file operations, and command-line parsing.
-
-- **`testfiles/`**: A folder intended for storing test files, useful for testing the application.
-
-- **`.gitignore`**: Specifies files and directories that Git should ignore (e.g., `.idea/`).
-
-- **`go.mod`**: The Go module file, which contains information about the module and its dependencies.
+- **`cmd/`**: Contains the main application entry points. Subdirectories for each command (`compareDB`, `readDB`) contain the respective `main.go` files.
+- **`data/`**: Stores sample databases in XML and JSON formats for testing and development.
+- **`internal/`**: Core application logic divided into:
+    - **`app/`**: Contains application logic for running the core functions.
+    - **`dbcompare/`**: Implements logic for comparing recipe databases.
+    - **`dbreader/`**: Reads and parses databases (XML and JSON).
+    - **`utils/`**: Helper functions for error handling and file operations.
+- **`.gitignore`**: Specifies files and directories to be ignored by Git (e.g., `.idea/`).
+- **`go.mod`**: Go module file, which defines dependencies and module information.
