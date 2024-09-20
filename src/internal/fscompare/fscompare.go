@@ -32,7 +32,7 @@ func CompareFS(filepathForOld, filepathForNew string) {
 	fileNew, err := utils.OpenFile(filepathForNew)
 	utils.HandleError(err)
 	defer func() {
-		if err := fileOld.Close(); err != nil {
+		if err = fileNew.Close(); err != nil {
 			fmt.Println("Ошибка при закрытии файла:", err)
 		}
 	}()
