@@ -12,7 +12,11 @@ func CompareFS(filepathForOld, filepathForNew string) {
 	// Читаем старый файл
 	fileOld, err := utils.OpenFile(filepathForOld)
 	utils.HandleError(err)
-	defer fileOld.Close()
+	defer func() {
+		if err := fileOld.Close(); err != nil {
+			fmt.Println("Ошибка при закрытии файла:", err)
+		}
+	}()
 
 	scanner := bufio.NewScanner(fileOld)
 	for scanner.Scan() {
@@ -27,7 +31,11 @@ func CompareFS(filepathForOld, filepathForNew string) {
 
 	fileNew, err := utils.OpenFile(filepathForNew)
 	utils.HandleError(err)
-	defer fileNew.Close()
+	defer func() {
+		if err := fileOld.Close(); err != nil {
+			fmt.Println("Ошибка при закрытии файла:", err)
+		}
+	}()
 
 	// Читаем новый файл
 	scanner = bufio.NewScanner(fileNew)
