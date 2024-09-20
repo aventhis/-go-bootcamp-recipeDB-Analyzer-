@@ -1,7 +1,7 @@
 package dbreader
 
 import (
-	"day01/pkg/utils"
+	"day01/internal/utils"
 	"errors"
 	"path/filepath"
 	"strings"
