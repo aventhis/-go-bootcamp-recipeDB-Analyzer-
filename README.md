@@ -40,7 +40,7 @@ There are many popular data formats in the world of programming, and Go makes it
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/go-bootcamp-recipeDB-analyzer.git
+    git clone https://github.com/aventhis/go-bootcamp-recipeDB-analyzer.git
     ```
 2. Navigate to the project directory:
     ```bash
@@ -50,6 +50,7 @@ There are many popular data formats in the world of programming, and Go makes it
     ```bash
     go build -o compareDB ./src/cmd/compareDB/main.go
     go build -o readDB ./src/cmd/readDB/main.go
+    go build -o compareFS ./src/cmd/compareFS/main.go
     ```
 
 ## Usage
